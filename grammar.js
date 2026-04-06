@@ -25,6 +25,8 @@ module.exports = grammar({
       $.string,
       $.number,
       $.operator,
+      $.paren_open,
+      $.paren_close,
       $.semicolon,
       $.identifier,
     ),
@@ -35,10 +37,14 @@ module.exports = grammar({
       token.immediate(':'),
     ),
 
-    // Function call: identifier immediately followed by (
+    // Function call: name followed by (args)
+    // Name can be identifier, keyword, or builtin since REXX
+    // keywords are context-sensitive (e.g. LEFT is both keyword and function)
     function_call: $ => prec(2, seq(
-      field('name', $.identifier),
-      token.immediate('('),
+      field('name', alias(
+        choice($.identifier, $.keyword, $.builtin_function),
+        $.function_name)),
+      '(',
       optional($._argument_list),
       ')',
     )),
@@ -184,8 +190,12 @@ module.exports = grammar({
       '\\<', '\\>',
       '+', '-', '*', '/', '//', '%', '**',
       '||', '&&', '&', '|', '\\',
-      '(', ')', ',',
+      ',',
     ),
+
+    // Parentheses (separate from operators to avoid function_call conflicts)
+    paren_open: $ => '(',
+    paren_close: $ => ')',
 
     semicolon: $ => ';',
 

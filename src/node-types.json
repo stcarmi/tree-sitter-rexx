@@ -13,7 +13,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "function_name",
             "named": true
           }
         ]
@@ -47,6 +47,11 @@
     }
   },
   {
+    "type": "function_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "keyword",
     "named": true,
     "fields": {}
@@ -69,6 +74,16 @@
   },
   {
     "type": "operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "paren_close",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "paren_open",
     "named": true,
     "fields": {}
   },
@@ -107,6 +122,14 @@
         },
         {
           "type": "operator",
+          "named": true
+        },
+        {
+          "type": "paren_close",
+          "named": true
+        },
+        {
+          "type": "paren_open",
           "named": true
         },
         {
